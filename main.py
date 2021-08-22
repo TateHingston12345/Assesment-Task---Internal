@@ -3,8 +3,8 @@
 import csv
 import time
 # Functions - All functions for the program #
-  # Test - Function for starting the test #
-def test():
+  # Scores - Function to show previous scores #
+def scores():
   print("pog")
   # Learn - Function for listing the words and their meanings #
 def learn():
@@ -24,8 +24,8 @@ def learn():
         elif f'{row[5]}' == "D":
           print(f'{row[4]}')
         time.sleep(0.25)
-  # Scores - Function to show previous scores #
-def scores():
+  # Test - Function for starting the test #
+def test():
   with open('Quiz.csv', mode='r') as QUIZCSV:
     csv_reader = csv.reader(QUIZCSV, delimiter=',')
     correct = 0
@@ -52,7 +52,10 @@ def scores():
               answered = 1
           else:
             print("Please enter a valid option.")
-    if questions/correct 
+    if correct/questions >= 0.5:
+      print("You have passed the test, good job!")
+    else:
+      print("You have failed, please go over definitions and try again.")
   # Menu - Function to select what to do #
 def menu():
   option = 256
