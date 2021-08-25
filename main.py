@@ -2,6 +2,8 @@
   # Libraries #
 import csv
 import time
+  # Variables #
+highscore = 0
 # Functions - All functions for the program #
   # Scores - Function to show previous scores #
 def scores():
@@ -28,6 +30,7 @@ def learn():
 def test():
   with open('Quiz.csv', mode='r') as QUIZCSV:
     start = time.perf_counter()
+    global highscore
     csv_reader = csv.reader(QUIZCSV, delimiter=',')
     correct = 0
     questions = 0
@@ -58,6 +61,11 @@ def test():
     if correct/questions >= 0.5 :
       print("You have passed the test, good job!")
       print("Your timed score was " + str(score) + ".")
+      if score > highscore:
+        print("That beats your previous highscore of " + str(highscore) + ".")
+        highscore = score
+      else:
+        print("Your current highscore is " + str(highscore) + ".")
     else:
       print("You have failed, please go over definitions and try again.")
   # Menu - Function to select what to do #
