@@ -27,6 +27,7 @@ def learn():
   # Test - Function for starting the test #
 def test():
   with open('Quiz.csv', mode='r') as QUIZCSV:
+    start = time.perf_counter()
     csv_reader = csv.reader(QUIZCSV, delimiter=',')
     correct = 0
     questions = 0
@@ -37,7 +38,7 @@ def test():
       else:
         print("What is the english definition of " + f'{row[0]}' + "?")
         while answered != 1:
-          answer = input("A - " + f'{row[1]}' + ", B - " + f'{row[2]}' + ", D - " + f'{row[3]}' + ", D - " + f'{row[4]}' + ": ")
+          answer = input("A - " + f'{row[1]}' + ", B - " + f'{row[2]}' + ", C - " + f'{row[3]}' + ", D - " + f'{row[4]}' + ": ")
           if answer == "A" or answer == "B" or answer == "C" or answer == "D":
             if answer == f'{row[5]}':
               print("Correct, good job.")
@@ -52,8 +53,11 @@ def test():
               answered = 1
           else:
             print("Please enter a valid option.")
-    if correct/questions >= 0.5:
+    end = time.perf_counter()
+    score = int((200-(end-start)*correct*10))
+    if correct/questions >= 0.5 :
       print("You have passed the test, good job!")
+      print("Your timed score was " + str(score) + ".")
     else:
       print("You have failed, please go over definitions and try again.")
   # Menu - Function to select what to do #
