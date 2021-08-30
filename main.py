@@ -3,6 +3,7 @@
 import csv
 import time
 import random
+import os
   # Variables #
 highscore = 0
 # Functions - All functions for the program #
@@ -13,7 +14,12 @@ def randomise(seq):
     return iter(shuffled)
   # Scores - Function to show previous scores #
 def scores():
-  print("pog")
+  if os.path.isfile("scores.csv"):
+    with open('scores.csv', mode='r') as SCORES:
+      csv_reader = csv.reader(SCORES, delimiter=',')
+      for row in csv_reader:
+        print("Name " + f'{row[0]}' + ", Score " + f'{row[1]}' + '.')
+        time.sleep(0.1)
   # Learn - Function for listing the words and their meanings #
 def learn():
   with open('Quiz.csv', mode='r') as QUIZCSV:
@@ -79,7 +85,7 @@ def test():
             with open('scores.csv', mode='a') as SCORES:
               csv_write = csv.writer(SCORES, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
               csv_write.writerow([str(name), str(score)])
-          save = "N"
+            save = "N"
           elif save == "N":
             break
           else:
