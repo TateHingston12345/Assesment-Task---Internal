@@ -63,13 +63,27 @@ def test():
           else:
             print("Please enter a valid option.")
     end = time.perf_counter()
-    score = int((200-(end-start)*correct*10))
+    score = int(((400-(end-start))*correct*10))
     if correct/questions >= 0.5 :
       print("You have passed the test, good job!")
       print("Your timed score was " + str(score) + ".")
       if score > highscore:
         print("That beats your previous highscore of " + str(highscore) + ".")
         highscore = score
+        save = 0
+        question = "Would you like to save your score: (Y/N) " 
+        while save != 'N':
+          save = str(input(question))
+          if save == "Y":
+            name = str(input("Please enter your name: "))
+            with open('scores.csv', mode='a') as SCORES:
+              csv_write = csv.writer(SCORES, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+              csv_write.writerow([str(name), str(score)])
+          save = "N"
+          elif save == "N":
+            break
+          else:
+            question = "Please enter a valid option."
       else:
         print("Your current highscore is " + str(highscore) + ".")
     else:
