@@ -2,9 +2,15 @@
   # Libraries #
 import csv
 import time
+import random
   # Variables #
 highscore = 0
 # Functions - All functions for the program #
+  # Randomise Function
+def randomise(seq):
+    shuffled = list(seq)
+    random.shuffle(shuffled)
+    return iter(shuffled)
   # Scores - Function to show previous scores #
 def scores():
   print("pog")
@@ -34,7 +40,7 @@ def test():
     csv_reader = csv.reader(QUIZCSV, delimiter=',')
     correct = 0
     questions = 0
-    for row in csv_reader:
+    for row in randomise(csv_reader):
       answered = 0
       if f'{row[0]}' == "Maori":
         print("Quiz Start:")
