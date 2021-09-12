@@ -4,6 +4,9 @@ import csv
 import time
 import random
 import os
+from colorama import init
+from termcolor import colored
+init()
   # Variables #
 highscore = 0
 # Functions - All functions for the program #
@@ -14,30 +17,37 @@ def randomise(seq):
     return iter(shuffled)
   # Scores - Function to show previous scores #
 def scores():
+  print("~~~~~Show Scores~~~~~")
   if os.path.isfile("scores.csv"):
     with open('scores.csv', mode='r') as SCORES:
       csv_reader = csv.reader(SCORES, delimiter=',')
       for row in csv_reader:
         print("Name " + f'{row[0]}' + ", Score " + f'{row[1]}' + '.')
-        time.sleep(0.1)
+        time.sleep(0.25)
+  print("---")
+  input("Press enter to continue:")
+  print("~~~~~Open Menu~~~~~")
   # Learn - Function for listing the words and their meanings #
 def learn():
+  print("~~~~~Show Definitions~~~~~")
   with open('Quiz.csv', mode='r') as QUIZCSV:
     csv_reader = csv.reader(QUIZCSV, delimiter=',')
     for row in csv_reader:
       if f'{row[0]}' == "Maori":
         print("Word Definitions:")
       else:
-        print(f'{row[0]}')
         if f'{row[5]}' == "A":
-          print(f'{row[1]}')
+          print(f'{row[1]}' + ' : ' f'{row[0]}')
         elif f'{row[5]}' == "B":
-          print(f'{row[2]}')
+          print(f'{row[2]}' + ' : ' f'{row[0]}')
         elif f'{row[5]}' == "C":
-          print(f'{row[3]}')
+          print(f'{row[3]}' + ' : ' f'{row[0]}')
         elif f'{row[5]}' == "D":
-          print(f'{row[4]}')
+          print(f'{row[4]}' + ' : ' f'{row[0]}')
         time.sleep(0.25)
+  print("---")
+  input("Press enter to continue: ")
+  print("~~~~~Open Menu~~~~~")
   # Test - Function for starting the test #
 def test():
   with open('Quiz.csv', mode='r') as QUIZCSV:
@@ -46,30 +56,33 @@ def test():
     csv_reader = csv.reader(QUIZCSV, delimiter=',')
     correct = 0
     questions = 0
+    print("~~~~~Quiz Start~~~~~")
     for row in randomise(csv_reader):
       answered = 0
       if f'{row[0]}' == "Maori":
-        print("Quiz Start:")
+        pass
       else:
         print("What is the english definition of " + f'{row[0]}' + "?")
         while answered != 1:
           answer = input("A - " + f'{row[1]}' + ", B - " + f'{row[2]}' + ", C - " + f'{row[3]}' + ", D - " + f'{row[4]}' + ": ")
           if answer == "A" or answer == "B" or answer == "C" or answer == "D":
             if answer == f'{row[5]}':
-              print("Correct, good job.")
+              print(colored(" ✓ ", "white", "on_green") + " Correct, good job.")
               correct = correct + 1
               questions = questions + 1
               print("You currently have " + str(correct) + " out of " + str(questions) + ".")
               answered = 1
             else:
-              print("Incorrect, the answer was " + f'{row[5]}' + ".")
+              print(colored(" ⤫  ", "white", "on_red") + " Incorrect, the answer was " + f'{row[5]}' + ".")
               questions = questions + 1
               print("You currently have " + str(correct) + " out of " + str(questions) + ".")
               answered = 1
+            print("---")
           else:
             print("Please enter a valid option.")
     end = time.perf_counter()
     score = int(((400-(end-start))*correct*10))
+    print("---")
     if correct/questions >= 0.5 :
       print("You have passed the test, good job!")
       print("Your timed score was " + str(score) + ".")
@@ -77,6 +90,7 @@ def test():
         print("That beats your previous highscore of " + str(highscore) + ".")
         highscore = score
         save = 0
+        print("---")
         question = "Would you like to save your score: (Y/N) " 
         while save != 'N':
           save = str(input(question))
@@ -94,6 +108,9 @@ def test():
         print("Your current highscore is " + str(highscore) + ".")
     else:
       print("You have failed, please go over definitions and try again.")
+  print("---")
+  input("Press enter to continue: ")
+  print("~~~~~Open Menu~~~~~")
   # Menu - Function to select what to do #
 def menu():
   option = 256
